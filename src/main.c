@@ -1,11 +1,9 @@
-// Online C compiler to run C program online
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/math.h"
 
 int main(void)
 {
-    printf("You entered: \n");
-    printf("your age is %d", my_age());
+    printf("sum %d\n", sum(1,4));
     return 0;
 }

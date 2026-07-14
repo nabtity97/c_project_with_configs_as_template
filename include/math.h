@@ -1,5 +1,10 @@
+#ifndef MATH_H
+#define MATH_H
+
 #include <stdio.h>
 
 #define MY_AGE 123
 
-int my_age(void);
+int sum(int a, int b);
+
+#endif

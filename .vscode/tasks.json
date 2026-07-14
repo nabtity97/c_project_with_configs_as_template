@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Hesham's C Project",
+            "label": "Hesham's build C Project",
             "type": "process",
             "command": "C:/Program Files/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe",
             "args": [
@@ -26,6 +26,14 @@
                 "kind": "build",
                 "isDefault": false
             }
+        },
+        {
+            "label": "Hesham's Run Unit Tests",
+            "type": "shell",
+            "command": "& 'C:/Program Files/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe' -g -Wall -Wextra -I '${workspaceFolder}/include' '${workspaceFolder}/src/math.c' '${workspaceFolder}/tests/test_math.c' -o '${workspaceFolder}/build/tests.exe'; if ($?) { & '${workspaceFolder}/build/tests.exe' }",
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }

@@ -1,6 +1,6 @@
 #include "../include/math.h"
 
-int my_age(void)
+int sum(int a, int b)
 {
-    return MY_AGE;
+    return a*b;
 }
