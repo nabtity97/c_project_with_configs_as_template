@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/math.h"
+#include "../include/device_info.h"
 
 int main(void)
-{
-    printf("sum %d\n", sum(1,4));
+{   
+    
+    printf("my is hesham \n");
     return 0;
 }
