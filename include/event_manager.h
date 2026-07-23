@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "utils.h"
+#include <stdint.h>
 
 #define MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT (10U)
 
@@ -32,8 +33,6 @@ typedef enum
 
     /* Security Events */
     EVENT_SECURITY_LOCKOUT,
-
-    EVENT_COUNT,
 
     EVENT_MAXIMUM
 
