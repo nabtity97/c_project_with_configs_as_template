@@ -50,12 +50,11 @@ typedef struct
     callbacks_handler_t callbacks[MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT];
 } event_manager_t;
 
-void event_manager_init(void);
+status_t event_manager_init(void);
+status_t event_manager_deinit(void);
 
-void event_manager_register(event_type_e event_type, void (*handler) (void));
-
-void event_manager_unregister(event_type_e event_type, void (*handler) (void));
-
-void event_manager_publish(event_type_e event_type);
+status_t event_manager_register(event_type_e event_type, void (*handler) (void));
+status_t event_manager_unregister(event_type_e event_type, void (*handler) (void));
+status_t event_manager_publish(event_type_e event_type);
 
 #endif

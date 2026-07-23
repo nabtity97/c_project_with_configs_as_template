@@ -4,7 +4,14 @@
 typedef enum 
 {   
     STATUS_OK                                       = 0,
-    DEVIC_INFO_NOT_INITIALIZED,
+    
+    /* event manager module status codes */
+    EVENT_MANAGER_NOT_INITIALIZED,
+    EVENT_MANAGER_INVALID_HANDLER,
+    EVENT_MANAGER_ALREADY_INITIALIZED,
+    EVENT_MANAGER_UNSUPPORTED_EVENT,
+    EVENT_MANAGER_CALLBACK_LIST_FULL, 
+    EVENT_MANAGER_HANDLER_NOT_FOUND, 
 
 } status_t;
 
