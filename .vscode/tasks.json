@@ -44,7 +44,6 @@
                 "-I",
                 "${workspaceFolder}/tests/unity_framework",
 
-                "${workspaceFolder}/src/event_manager.c",
                 "${workspaceFolder}/tests/unity_framework/unity.c",
                 "${workspaceFolder}/tests/unit_tests/test_event_manager.c",
 
@@ -59,8 +58,8 @@
             ]
         },
         /*
-             Task to build the Unit tests and then run them. That's why there is not need to build 
-             before ruuning this task.
+             Task to build the Unit tests and then run them. That's why there is no
+              need to build before ruuning this task.
         */
         {
             "label": "Hesham's Run Unit Tests",
