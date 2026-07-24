@@ -55,7 +55,7 @@ status_t event_manager_register(event_type_e event_type, void (*handler) (void))
         return EVENT_MANAGER_INVALID_HANDLER;
 
     // Check if the event is valid event. 
-    if(event_type < EVENT_PIN_ACCEPTED || event_type > EVENT_SECURITY_LOCKOUT)
+    if(event_type < EVENT_PIN_ACCEPTED || event_type >= EVENT_MAXIMUM)
         return  EVENT_MANAGER_UNSUPPORTED_EVENT;
 
     /* Search for the first available callback slot for the requested event. */
@@ -90,19 +90,18 @@ status_t event_manager_unregister(event_type_e event_type, void (*handler) (void
         return EVENT_MANAGER_INVALID_HANDLER;
 
     // Check if the event is valid event. 
-    if(event_type < EVENT_PIN_ACCEPTED || event_type > EVENT_SECURITY_LOCKOUT)
+    if(event_type < EVENT_PIN_ACCEPTED || event_type >= EVENT_MAXIMUM)
         return  EVENT_MANAGER_UNSUPPORTED_EVENT;
 
-    for(int i = 0; i < EVENT_MAXIMUM; i++)
+    for(uint8_t i = 0; i < EVENT_MAXIMUM; i++)
     {
         if(event_type == event_manager[i].event_type)
         {
-            for(int j = 0; j < MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT; j++)
+            for(uint8_t j = 0; j < MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT; j++)
             {
                 if(event_manager[i].callbacks[j].registered_callback == handler)
                 {    
                     event_manager[i].callbacks[j].is_empty = true;
-
                     return STATUS_OK;
                 }
             }
@@ -115,5 +114,21 @@ status_t event_manager_unregister(event_type_e event_type, void (*handler) (void
 
 status_t event_manager_publish(event_type_e event_type)
 {
-    (void) event_type;
+    // check if the module has been initialized.
+    if(!is_event_manager_initilaized)
+        return EVENT_MANAGER_NOT_INITIALIZED;
+    
+    // Check if the event is valid event. 
+    if(event_type < EVENT_PIN_ACCEPTED || event_type >= EVENT_MAXIMUM)
+        return EVENT_MANAGER_UNSUPPORTED_EVENT;
+
+    for(uint8_t i = 0; i < MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT; i++)
+    {
+        if(!event_manager[event_type].callbacks[i].is_empty)
+        {
+            event_manager[event_type].callbacks[i].registered_callback();
+        }
+    }
+
+    return STATUS_OK;
 }

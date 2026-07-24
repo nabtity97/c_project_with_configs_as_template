@@ -14,10 +14,6 @@ typedef enum
     EVENT_PIN_ACCEPTED = 0,
     EVENT_PIN_REJECTED,
 
-    /* Door Events */
-    EVENT_DOOR_OPENED,
-    EVENT_DOOR_CLOSED,
-
     /* Motor Events */
     EVENT_LOCK_STARTED,
     EVENT_LOCK_COMPLETED,
@@ -27,12 +23,6 @@ typedef enum
 
     /* Battery Events */
     EVENT_BATTERY_LOW,
-
-    /* Timer Events */
-    EVENT_AUTO_LOCK_TIMEOUT,
-
-    /* Security Events */
-    EVENT_SECURITY_LOCKOUT,
 
     EVENT_MAXIMUM
 
