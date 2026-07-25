@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+
+  build-program:
+    name: Build Program
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build application
+        run: make build-program
+
+  unit-tests:
+    name: Build and Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build unit tests
+        run: make build-tests
+
+      - name: Run unit tests
+        run: make run-tests
