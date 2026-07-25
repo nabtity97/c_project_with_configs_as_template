@@ -1,18 +1,4 @@
-#include "unity.h"
-#include "event_manager.h"
-#include "../../src/event_manager.c"
-
-void setUp(void);
-void tearDown(void);
-
-/* Test Functions */
-void test_event_manger_init_pass(void);
-void test_event_manger_register_pass(void);
-void test_event_manager_init_fail_already_initialized(void);
-void test_event_manger_register_fail_module_uninitialized(void);
-void test_event_manger_register_fail_invalid_handler(void);
-void test_event_manger_register_fail_unsupported_event(void);
-void test_event_manger_register_fail_callback_list_full(void);
+#include "test_event_manager.h"
 
 /* Callback invocation counters */
 static uint32_t helper0_calls  = 0;
@@ -59,33 +45,37 @@ static void (*helper_functions[])(void) =
     helper_function10
 };
 
-/* main function */
-int main(void) {
-    UNITY_BEGIN();
-    
-    RUN_TEST(test_event_manger_init_pass);
-    RUN_TEST(test_event_manger_register_pass);
-    RUN_TEST(test_event_manager_init_fail_already_initialized);
-    RUN_TEST(test_event_manger_register_fail_callback_list_full);
-    RUN_TEST(test_event_manger_register_fail_unsupported_event);
-    RUN_TEST(test_event_manger_register_fail_invalid_handler);
-    RUN_TEST(test_event_manger_register_fail_module_uninitialized);
-
-    // TODO: ADD TESTS FOR unregister and puplish functions. 
-
-
-    return UNITY_END();
+static void reset_helper_call_counters(void)
+{
+    helper0_calls  = 0;
+    helper1_calls  = 0;
+    helper2_calls  = 0;
+    helper3_calls  = 0;
+    helper4_calls  = 0;
+    helper5_calls  = 0;
+    helper6_calls  = 0;
+    helper7_calls  = 0;
+    helper8_calls  = 0;
+    helper9_calls  = 0;
+    helper10_calls = 0;
 }
+
+static const event_manager_t* event_manager = NULL;
 
 void setUp(void)
 {
     // to setup the event manager module.
     TEST_ASSERT_EQUAL(STATUS_OK, event_manager_init());
+    
+    event_manager = event_manager_get_event_manager_handler();
+    TEST_ASSERT_NOT_NULL(event_manager);
+
 }
 
 void tearDown(void)
 {   
     // to clean up the moduel.
+    event_manager = NULL;
     event_manager_deinit();
     reset_helper_call_counters();
 }
@@ -104,7 +94,7 @@ void test_event_manger_init_pass(void)
         }
     }
 
-    TEST_ASSERT_TRUE(is_event_manager_initilaized);
+    TEST_ASSERT_TRUE(event_manager_get_event_manager_state());
 }
 
 void test_event_manager_init_fail_already_initialized(void)
@@ -140,8 +130,7 @@ void test_event_manger_register_pass(void)
 
 void test_event_manger_register_fail_module_uninitialized(void)
 {
-    TEST_ASSERT_EQUAL(STATUS_OK,
-         event_manager_deinit());
+    TEST_ASSERT_EQUAL(STATUS_OK, event_manager_deinit());
     TEST_ASSERT_EQUAL(EVENT_MANAGER_NOT_INITIALIZED,
          event_manager_register(EVENT_PIN_ACCEPTED, helper_functions[0]));
 }
@@ -179,21 +168,4 @@ void test_event_manger_register_fail_callback_list_full(void)
     /* A full callback list for one event must not affect other events. */
     TEST_ASSERT_EQUAL(STATUS_OK,
          event_manager_register(EVENT_PIN_REJECTED, helper_functions[0]));
-}
-
-/* HELPER FUNCTIONS --------------------- */
-
-static void reset_helper_call_counters(void)
-{
-    helper0_calls  = 0;
-    helper1_calls  = 0;
-    helper2_calls  = 0;
-    helper3_calls  = 0;
-    helper4_calls  = 0;
-    helper5_calls  = 0;
-    helper6_calls  = 0;
-    helper7_calls  = 0;
-    helper8_calls  = 0;
-    helper9_calls  = 0;
-    helper10_calls = 0;
 }

@@ -24,27 +24,6 @@ status_t event_manager_init(void)
     return STATUS_OK;
 }
 
-status_t event_manager_deinit(void)
-{   
-    if(!is_event_manager_initilaized)
-        return EVENT_MANAGER_NOT_INITIALIZED;
-
-    for(uint8_t i = 0; i < EVENT_MAXIMUM; i++)
-    {
-        event_manager[i].event_type = EVENT_MAXIMUM;
-
-        for (uint8_t j = 0U; j < MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT; j++)
-        {
-            event_manager[i].callbacks[j].is_empty = true; 
-            event_manager[i].callbacks[j].registered_callback = NULL;
-        }
-    }
-
-    is_event_manager_initilaized = false;
-    
-    return STATUS_OK;
-}
-
 status_t event_manager_register(event_type_e event_type, void (*handler) (void))
 {   
     // check if the module has been initialized.
@@ -132,3 +111,38 @@ status_t event_manager_publish(event_type_e event_type)
 
     return STATUS_OK;
 }
+
+#ifdef UNIT_TEST
+
+status_t event_manager_deinit(void)
+{   
+    if(!is_event_manager_initilaized)
+        return EVENT_MANAGER_NOT_INITIALIZED;
+
+    for(uint8_t i = 0; i < EVENT_MAXIMUM; i++)
+    {
+        event_manager[i].event_type = EVENT_MAXIMUM;
+
+        for (uint8_t j = 0U; j < MAX_NUM_OF_CALLBACKS_FOR_EACH_EVENT; j++)
+        {
+            event_manager[i].callbacks[j].is_empty = true; 
+            event_manager[i].callbacks[j].registered_callback = NULL;
+        }
+    }
+
+    is_event_manager_initilaized = false;
+    
+    return STATUS_OK;
+}
+
+const event_manager_t* event_manager_get_event_manager_handler(void)
+{
+    return event_manager;
+}
+
+bool event_manager_get_event_manager_state(void)
+{
+    return is_event_manager_initilaized;
+}
+
+#endif

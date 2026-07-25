@@ -4,8 +4,7 @@
 
 int main(void)
 {   
+    printf("Welcome to the program. \n");
     
-    printf("my is hesham \n");
-    printf("Hello 44 \n");
     return 0;
 }
