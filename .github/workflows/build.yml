@@ -1,33 +1,29 @@
-name: Build
+name: C Project Continuous Integration
 
 on:
   push:
-    branches:
-      - main
-      
+  pull_request:
+
 jobs:
-
-  build-program:
-    name: Build Program
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build application
-        run: make build-program
+      - name: Build development Docker image
+        run: docker build -t c-development-env .
 
-  unit-tests:
-    name: Build and Run Unit Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Build unit tests
-        run: make build-tests
-
-      - name: Run unit tests
-        run: make run-tests
+      - name: Build and test project
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            c-development-env \
+            sh -c "
+              make clean &&
+              make build-program &&
+              make build-tests &&
+              make run-tests
+            "

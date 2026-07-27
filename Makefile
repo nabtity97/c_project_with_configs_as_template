@@ -136,9 +136,9 @@ endif
 # Public targets
 # ============================================================
 
-.PHONY: all program tests run-tests clean rebuild help
+.PHONY: all build-program build-tests run-program run-tests clean rebuild help
 
-all: program tests
+all: build-program build-tests
 
 build-program: $(PROGRAM_TARGET)
 
@@ -159,12 +159,12 @@ rebuild: clean all
 
 help:
 	@echo Available targets:
-	@echo   program     Build the application
-	@echo   tests       Build the unit-test executable
-	@echo   run-tests   Build and run the unit tests
-	@echo   all         Build application and unit tests
-	@echo   clean       Delete generated build files
-	@echo   rebuild     Clean and build everything
+	@echo   build-program     Build the application
+	@echo   build-tests       Build the unit-test executable
+	@echo   run-program  	  Build and run the unit tests
+	@echo   run-tests         Build application and unit tests
+	@echo   clean       	  Delete generated build files
+	@echo   rebuild     	  Clean and build everything
 
 
 # ============================================================

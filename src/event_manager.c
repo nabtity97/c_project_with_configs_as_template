@@ -5,6 +5,7 @@ static bool is_event_manager_initilaized = false;
 
 status_t event_manager_init(void)
 {   
+    // check if the module is already initialized.
     if(is_event_manager_initilaized)
         return EVENT_MANAGER_ALREADY_INITIALIZED;
 
@@ -113,7 +114,6 @@ status_t event_manager_publish(event_type_e event_type)
 }
 
 #ifdef UNIT_TEST
-
 status_t event_manager_deinit(void)
 {   
     if(!is_event_manager_initilaized)
@@ -144,5 +144,4 @@ bool event_manager_get_event_manager_state(void)
 {
     return is_event_manager_initilaized;
 }
-
 #endif
